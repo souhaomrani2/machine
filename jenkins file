@@ -5,8 +5,16 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 script {
+                    // Utiliser les informations d'identification SSH pour accéder au dépôt Git
+                    withCredentials([sshUserPrivateKey(credentialsId: '87797f30-504f-499c-9047-cf64f656bf75', keyFileVariable: 'SSH_PRIVATE_KEY', passphraseVariable: '', usernameVariable: '')]) {
+                        // Cloner le dépôt Git avec la clé SSH
+                        sh '''
+                            eval $(ssh-agent -s)
+                            ssh-add $SSH_PRIVATE_KEY
+                            git clone git@github.com:souhaomrani2/machine.git
+                        '''
+                    }
                     // Initialiser Terraform
-                    git 'https://github.com/souhaomrani2/machine.git'  // Ajouter l'URL du dépôt Git
                     sh 'terraform init'
                 }
             }
@@ -24,7 +32,7 @@ pipeline {
 
     post {
         always {
-            // Nettoyer Terraform après l'exécution
+            // Nettoyer Terraform après exécution
             script {
                 sh 'terraform destroy -auto-approve'
             }
