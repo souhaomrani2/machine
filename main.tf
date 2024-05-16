@@ -18,9 +18,7 @@ resource "proxmox_vm_qemu" "my_vm" {
   name        = "my-vm"
   target_node = "pve"
   clone       = "VM 1804"
-  memory      = 1024
-  cores       = 2
-
+   agent = 1
   provisioner "file" {
     source      = "cloud-init.yaml"
     destination = "/tmp/cloud-init.yaml"
