@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    proxmox = {
+      source = "hashicorp/proxmox"
+      version = ">= 2.0.0"
+    }
+  }
+}
 provider "proxmox" {
   pm_api_url         = "https://192.168.127.177:8006/api2/json"
   pm_api_token_id    = "your-api-token-id"
