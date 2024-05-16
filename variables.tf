@@ -5,12 +5,12 @@ variable "pm_api_url" {
 
 variable "pm_user" {
   description = "Nom d'utilisateur Proxmox"
-  default     = " root@pam!souha"  # Remplacez par votre nom d'utilisateur Proxmox
+  default     = "root@pam!souha2"  # Remplacez par votre nom d'utilisateur Proxmox
 }
 
 variable "pm_password" {
   description = "Mot de passe Proxmox"
-  default     = "21d17d80-eda1-40e6-a9fa-6966c9475c59  "  # Remplacez par votre mot de passe Proxmox
+  default     = "4368e63e-53e8-4e07-b25a-856cab14593e"  # Remplacez par votre mot de passe Proxmox
 }
 
 variable "template" {
