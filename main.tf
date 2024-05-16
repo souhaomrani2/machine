@@ -38,5 +38,5 @@ resource "proxmox_vm_qemu" "my_vm" {
 }
 
 output "vm_ip_address" {
-  value = proxmox_vm_qemu.my_vm.network_interface.0.ipv4_address
+  value = proxmox_vm_qemu.my_vm.ip_address
 }
