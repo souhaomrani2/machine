@@ -23,7 +23,7 @@ resource "proxmox_vm_qemu" "my_vm" {
   provisioner "remote-exec" {
     connection {
       type        = "ssh"
-      host        = proxmox_vm_qemu.my_vm.ip_address
+      host        = self.network_interface.0.ipv4_address
       user        = "your_ssh_user"
       private_key = file("~/.ssh/id_rsa")
     }
@@ -35,4 +35,8 @@ resource "proxmox_vm_qemu" "my_vm" {
       "sudo systemctl start qemu-guest-agent"
     ]
   }
+}
+
+output "vm_ip_address" {
+  value = proxmox_vm_qemu.my_vm.network_interface.0.ipv4_address
 }
