@@ -1,8 +1,9 @@
+# Configuration Terraform
 terraform {
   required_providers {
     proxmox = {
-      source = "hashicorp/proxmox"
-      version = ">= 2.0.0"
+      source  = "Telmate/proxmox"
+      version = "3.0.1-rc1"
     }
   }
 }
