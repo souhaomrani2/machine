@@ -1,0 +1,20 @@
+# cloud-init.yaml
+
+# Définition des utilisateurs
+users:
+  - name: monutilisateur
+    lock_passwd: false  # Permet de déverrouiller le compte pour permettre la connexion par mot de passe
+    passwd:rootroot# Remplacez par votre mot de passe chiffré
+
+# Configuration réseau (DHCP)
+network:
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: true
+
+# Exécution de commandes après le démarrage
+runcmd:
+  - echo "Hello, Cloud-Init!" > /root/cloud-init.txt
+  - sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+  - systemctl restart sshd
