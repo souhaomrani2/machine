@@ -9,8 +9,8 @@ terraform {
 
 provider "proxmox" {
   pm_api_url         = "https://192.168.127.177:8006/api2/json"
-  pm_api_token_id    = "root@pam!souha"  # Remplacez par votre ID de jeton API
-  pm_api_token_secret = "ba5827a9-4e1b-41b7-b2aa-67dc88dbe94c"  # Remplacez par votre secret de jeton API
+  pm_api_token_id    = "root@pam!souha2"  # Vérifiez votre ID de jeton API
+  pm_api_token_secret = "4368e63e-53e8-4e07-b25a-856cab14593e"  # Vérifiez votre secret de jeton API
   pm_tls_insecure    = true
 }
 
