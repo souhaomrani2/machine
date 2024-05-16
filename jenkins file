@@ -2,31 +2,32 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Terraform Init') {
             steps {
-                // Checkout du code depuis le dépôt Git
-                git url: 'https://github.com/souhaomrani2/machine.git'
+                script {
+                    // Initialiser Terraform
+                    git 'https://github.com/souhaomrani2/machine.git'  // Ajouter l'URL du dépôt Git
+                    sh 'terraform init'
+                }
             }
         }
-        stage('Build') {
+
+        stage('Terraform Apply') {
             steps {
-                // Exemple de commande de build (à personnaliser)
-                sh 'mvn clean package'  // Maven build
-            }
-        }
-        stage('Deploy') {
-            steps {
-                // Exemple de déploiement (à personnaliser, par exemple avec Terraform)
-                sh 'terraform init'
-                sh 'terraform apply -auto-approve'
+                script {
+                    // Appliquer les changements Terraform
+                    sh 'terraform apply -auto-approve'
+                }
             }
         }
     }
 
     post {
         always {
-            // Nettoyage après exécution (par exemple, destruction Terraform)
-            sh 'terraform destroy -auto-approve'
+            // Nettoyer Terraform après l'exécution
+            script {
+                sh 'terraform destroy -auto-approve'
+            }
         }
     }
 }
