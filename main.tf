@@ -15,12 +15,16 @@ provider "proxmox" {
   pm_api_token_secret = var.pm_password
   pm_tls_insecure    = true
 }
+
 # Définition de la machine virtuelle Proxmox avec Cloud-Init
 resource "proxmox_vm_qemu" "my_vm" {
-  name               = "my-vm"
-  target_node        = "pve"  # Utilisez le nom du nœud Proxmox cible
-  clone              = "VM 1804"  # Utilisez le nom du template à cloner défini dans les variables
-  guest_agent        = true
+  name           = "my-vm"
+  target_node    = "pve"  # Utilisez le nom du nœud Proxmox cible
+  clone          = "VM 1804"  # Utilisez le nom du template à cloner défini dans les variables
+  guest_agent    = false  # Ceci est un exemple pour désactiver guest_agent
+  memory         = 1024
+  cores          = 2
+
   # Configuration Cloud-Init
   provisioner "file" {
     source      = "cloud-init.yaml"
@@ -33,8 +37,4 @@ resource "proxmox_vm_qemu" "my_vm" {
       "sudo /tmp/cloud-init.yaml"
     ]
   }
-
-  # Autres configurations de la VM
-  memory = 1024
-  cores  = 2
 }
