@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // Clonage du dépôt Git en utilisant HTTPS avec les informations d'identification spécifiées
-                git credentialsId: '10', url: 'https://github.com/souhaomrani2/machine.git'
+                git credentialsId: '10', url: 'https://github.com/souhaomrani2/machine.git', branch: 'main'
             }
         }
 
