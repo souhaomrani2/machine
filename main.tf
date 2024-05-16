@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "telmate/proxmox"
-      version = "3.0.1-rc1"
+      version = ">=3.0.0"  # Utilisez une version supérieure ou égale à 3.0.0
     }
   }
 }
@@ -20,20 +20,13 @@ resource "proxmox_vm_qemu" "my_vm" {
   clone       = "VM 1804"
   agent       = 1
 
-  provisioner "remote-exec" {
-    connection {
-      type        = "ssh"
-      host        = self.network_interface.0.ipv4_address
-      user        = "your_ssh_user"
-      private_key = file("~/.ssh/id_rsa")
-    }
+  disk {
+    storage = "local-lvm"
+    size    = "10G"
+  }
 
-    inline = [
-      "sudo apt-get update",
-      "sudo apt-get install -y qemu-guest-agent",
-      "sudo systemctl enable qemu-guest-agent",
-      "sudo systemctl start qemu-guest-agent"
-    ]
+  cloud_init {
+    user_data = templatefile("${path.module}/cloud-init.yaml", {})
   }
 }
 
