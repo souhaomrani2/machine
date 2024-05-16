@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "telmate/proxmox"
-      version = "3.0.1-rc1"
+      version = ">=3.0.0"
     }
   }
 }
@@ -18,17 +18,23 @@ resource "proxmox_vm_qemu" "my_vm" {
   name        = "my-vm"
   target_node = "pve"
   clone       = "VM 1804"
-  agent       = 1
 
-  provisioner "file" {
-    source      = "cloud-init.yaml"
-    destination = "/tmp/cloud-init.yaml"
-  }
+  # Activer l'agent QEMU
+  agent = 1
 
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/cloud-init.yaml",
-      "sudo /tmp/cloud-init.yaml"
-    ]
+  # Spécifier la configuration de Cloud-init
+  cloud_init {
+    user_data = <<-EOF
+      #!/bin/bash
+      set -e
+
+      # Installer le qemu-guest-agent
+      apt-get update
+      apt-get install -y qemu-guest-agent
+
+      # Activer et démarrer le service qemu-guest-agent
+      systemctl enable qemu-guest-agent
+      systemctl start qemu-guest-agent
+    EOF
   }
 }
