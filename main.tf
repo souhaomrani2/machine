@@ -18,23 +18,21 @@ resource "proxmox_vm_qemu" "my_vm" {
   name        = "my-vm"
   target_node = "pve"
   clone       = "VM 1804"
+  agent       = 1
 
-  # Activer l'agent QEMU
-  agent = 1
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      host        = self.network_interface.0.ipv4_address
+      user        = "your_ssh_user"
+      private_key = file("~/.ssh/id_rsa")
+    }
 
-  # Spécifier la configuration de Cloud-init
-  cloud_init {
-    user_data = <<-EOF
-      #!/bin/bash
-      set -e
-
-      # Installer le qemu-guest-agent
-      apt-get update
-      apt-get install -y qemu-guest-agent
-
-      # Activer et démarrer le service qemu-guest-agent
-      systemctl enable qemu-guest-agent
-      systemctl start qemu-guest-agent
-    EOF
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get install -y qemu-guest-agent",
+      "sudo systemctl enable qemu-guest-agent",
+      "sudo systemctl start qemu-guest-agent"
+    ]
   }
 }
