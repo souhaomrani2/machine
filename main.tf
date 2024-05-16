@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     proxmox = {
-      source = "telmate/proxmox"
+      source  = "telmate/proxmox"
       version = ">= 3.0.1"
     }
   }
@@ -9,8 +9,8 @@ terraform {
 
 provider "proxmox" {
   pm_api_url         = "https://192.168.127.177:8006/api2/json"
-  pm_api_token_id    = "your-api-token-id"
-  pm_api_token_secret = "your-api-token-secret"
+  pm_api_token_id    = "root@pam!souha"  # Remplacez par votre ID de jeton API
+  pm_api_token_secret = "ba5827a9-4e1b-41b7-b2aa-67dc88dbe94c"  # Remplacez par votre secret de jeton API
   pm_tls_insecure    = true
 }
 
