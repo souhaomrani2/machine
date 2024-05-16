@@ -23,7 +23,7 @@ resource "proxmox_vm_qemu" "my_vm" {
   provisioner "remote-exec" {
     connection {
       type        = "ssh"
-      host        = self.network_interface.0.ipv4_address
+      host        = proxmox_vm_qemu.my_vm.network_interface.0.ipv4_address
       user        = "your_ssh_user"
       private_key = file("~/.ssh/id_rsa")
     }
