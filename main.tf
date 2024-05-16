@@ -12,7 +12,7 @@ terraform {
 provider "proxmox" {
   pm_api_url         = "https://192.168.127.177:8006/api2/json"
   pm_api_token_id    = "root@pam!souha"
-  pm_api_token_secret = "f21d17d80-eda1-40e6-a9fa-6966c9475c59"
+  pm_api_token_secret = "21d17d80-eda1-40e6-a9fa-6966c9475c59 "
   pm_tls_insecure    = true  # Utilisation de HTTPS (non sécurisé dans cet exemple)
 }
 
